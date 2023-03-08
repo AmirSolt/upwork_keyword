@@ -22,7 +22,7 @@ class Analyzer:
 
 
         ax.set_title('Job Volume')
-        ax.plot(x, y, "-o",) 
+        ax.plot(x, y, "-o") 
         ax.set_xticklabels(labels=x, rotation=45, ha='right')
 
 

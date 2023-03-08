@@ -15,9 +15,13 @@ class Cleaner:
 
 
     def get_keyword(self):
-        path = 'div[data-test="UpCTypeahead"] > div'
-        element = self.soup.select_one(path)
-        keyword = element.get("query")
+        # get title
+        title = self.soup.select_one("title").text
+
+
+
+        keyword = self.__get_words_between(title, "Freelance", "Jobs - Upwork")
+        
         
         return keyword
     
@@ -54,7 +58,16 @@ class Cleaner:
         
 
 
+    def __get_words_between(self, text, start, end):
+        idx1 = text.index(start)
+        idx2 = text.index(end)
 
+        res = ''
+        # getting elements in between
+        for idx in  range(idx1 + len(start) + 1, idx2):
+            res = res + text[idx]
+        
+        return res
 
     def __textify_list_of_elements(self, elements):
         return [self.__clean_text(element.find(text=True, recursive=False)) for element in elements]
