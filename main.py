@@ -22,9 +22,7 @@ for page_name in page_names:
         "proposals": cleaner.get_number_of_proposals()
     }
 
-    print(">>>>>")
-    print(data)
-    print(">>>>>")
+ 
 
 
     dataset.append(data)

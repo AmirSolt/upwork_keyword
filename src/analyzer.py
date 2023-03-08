@@ -40,33 +40,62 @@ class Analyzer:
 
 
             ax.set_title('Payment Distribution')
-            ax.plot(x, y, "-o", label=name)
-            ax.legend(loc="upper left")
+            ax.plot(x, y, "-o", label=data["keyword"])
+            ax.legend(loc="upper right")
             ax.set_xticklabels(labels=x, rotation=45, ha='right')
 
 
 
-    def plot_proposals(self):
+    def plot_fixed_prices_by_total(self):
 
         for data in self.dateset:
 
             x = []
             y = []
+
             ax = self.axs[1,0]
+            for name, payemnt in data["detailed_fixed_payment"].items():
+                x.append(name)
+                y.append(payemnt/data["total_payment"]["Fixed-Price"])
+
+
+            ax.set_title('Payment Distribution / Fixed-Price')
+            ax.plot(x, y, "-o", label=data["keyword"])
+            ax.legend(loc="upper right")
+            ax.set_xticklabels(labels=x, rotation=45, ha='right')
+
+
+
+    def plot_proposals_by_total(self):
+
+        for data in self.dateset:
+
+            x = []
+            y = []
+            ax = self.axs[1,1]
+
+            total = sum(data["proposals"].values())
 
             for name, proposal in data["proposals"].items():
                 x.append(name)
-                y.append(proposal)
+                y.append(proposal/total)
 
-            ax.set_title('Proposal Distribution')
-            ax.plot(x, y, "-o", label=name)
-            ax.legend(loc="upper left")
+            ax.set_title('Proposal Distribution by total')
+            ax.plot(x, y, "-o", label=data["keyword"])
+            ax.legend(loc="upper right")
             ax.set_xticklabels(labels=x, rotation=45, ha='right')
+
+
+
+
+
+        
 
 
     def plot(self):
         self.plot_volumes()
         self.plot_fixed_prices()
-        self.plot_proposals()
+        self.plot_fixed_prices_by_total()
+        self.plot_proposals_by_total()
 
         plt.show()
