@@ -13,7 +13,6 @@ class Cleaner:
     def __init__(self, page_html) -> None:
         self.soup = BeautifulSoup(page_html, 'html.parser')
 
-    
 
     def get_keyword(self):
         path = 'div[data-test="UpCTypeahead"] > div'
