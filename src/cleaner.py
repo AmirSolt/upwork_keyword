@@ -4,7 +4,6 @@ import re
 
 
 
-
 class Cleaner:
 
 
@@ -17,7 +16,7 @@ class Cleaner:
     
 
     def get_keyword(self):
-        path = ".flex-1>.up-input-group>div>div"
+        path = 'div[data-test="UpCTypeahead"] > div'
         element = self.soup.select_one(path)
         keyword = element.get("query")
         
