@@ -1,101 +1,86 @@
-import matplotlib.pyplot as plt
+
+from pprint import pprint
+
 
 class Analyzer:
+
+
+    MIN_PROPOSALS = 50
+
+
+    def __init__(self, dataset) -> None:
+        self.dataset = dataset
+
+
+
+
+    def get_filter_low_proposals(self):
+        n_dataset = []
+        for data in self.dataset:
+            if list(data["proposals"].values())[0] > self.MIN_PROPOSALS:
+                n_dataset.append(data)
+
+        self.dataset = n_dataset
     
 
-    def __init__(self, dateset):
-        self.dateset = dateset
-
-        self.fig, self.axs = plt.subplots(2, 2)
-
-
-    def plot_volumes(self):
-
-        x = []
-        y = []
-
-        ax = self.axs[0,0]
-        for data in self.dateset:
-            volumes = data["total_payment"]["Hourly"] + data["total_payment"]["Fixed-Price"]
-            x.append(data["keyword"])
-            y.append(volumes)
-
-
-        ax.set_title('Job Volume')
-        ax.plot(x, y, "-o") 
-        ax.set_xticklabels(labels=x, rotation=45, ha='right')
-
-
-    def plot_fixed_prices(self):
-
-        for data in self.dateset:
-
-            x = []
-            y = []
-
-            ax = self.axs[0,1]
-            for name, payemnt in data["detailed_fixed_payment"].items():
-                x.append(name)
-                y.append(payemnt)
-
-
-            ax.set_title('Payment Distribution')
-            ax.plot(x, y, "-o", label=data["keyword"])
-            ax.legend(loc="upper right")
-            ax.set_xticklabels(labels=x, rotation=45, ha='right')
 
 
 
-    def plot_fixed_prices_by_total(self):
 
-        for data in self.dateset:
+    def order_by_proposal(self):
 
-            x = []
-            y = []
+        proposal_len = len(self.dataset[0]["proposals"].values())
 
-            ax = self.axs[1,0]
-            for name, payemnt in data["detailed_fixed_payment"].items():
-                x.append(name)
-                y.append(payemnt/data["total_payment"]["Fixed-Price"])
+        for i, data in enumerate(self.dataset):
+            score = 0
 
-
-            ax.set_title('Payment Distribution / Fixed-Price')
-            ax.plot(x, y, "-o", label=data["keyword"])
-            ax.legend(loc="upper right")
-            ax.set_xticklabels(labels=x, rotation=45, ha='right')
-
-
-
-    def plot_proposals_by_total(self):
-
-        for data in self.dateset:
-
-            x = []
-            y = []
-            ax = self.axs[1,1]
 
             total = sum(data["proposals"].values())
 
-            for name, proposal in data["proposals"].items():
-                x.append(name)
-                y.append(proposal/total)
-
-            ax.set_title('Proposal Distribution by total')
-            ax.plot(x, y, "-o", label=data["keyword"])
-            ax.legend(loc="upper right")
-            ax.set_xticklabels(labels=x, rotation=45, ha='right')
+            for j, proposal in enumerate(data["proposals"].values()):
+                score += (proposal/total)*(proposal_len-(j+1))
 
 
+            self.dataset[i]["proposal_score"] = score 
+
+
+        self.dataset = sorted(self.dataset, key=lambda x: x["proposal_score"], reverse=True)
+
+
+    def order_by_payment(self):
+        for i, data in enumerate(self.dataset):
+            score = 0
+            total = data["total_payment"]["Fixed-Price"]
+            for j, payment in enumerate(data["detailed_fixed_payment"].values()):
+                score += (payment/total)*(j+1)
+
+
+            self.dataset[i]["payment_score"] = score 
+
+
+        self.dataset = sorted(self.dataset, key=lambda x: x["payment_score"], reverse=True)
 
 
 
-        
+    def order_by_total_score(self):
+
+        sum_payment_score = sum([data["payment_score"] for data in self.dataset])
+        sum_proposal_score = sum([data["proposal_score"] for data in self.dataset])
+
+        for i, data in enumerate(self.dataset):
+            score = 0
+            score = self.dataset[i]["payment_score"]/sum_payment_score + self.dataset[i]["proposal_score"]/sum_proposal_score
+            self.dataset[i]["total_score"] = score
 
 
-    def plot(self):
-        self.plot_volumes()
-        self.plot_fixed_prices()
-        self.plot_fixed_prices_by_total()
-        self.plot_proposals_by_total()
+        self.dataset = sorted(self.dataset, key=lambda x: x["total_score"], reverse=True)
 
-        plt.show()
+
+
+    def print_dataset(self, keyword=None):
+
+        if keyword:
+            kws = [(data["keyword"],data[keyword]) for data in self.dataset]
+        else:
+            kws = [data["keyword"] for data in self.dataset]
+        pprint(kws)

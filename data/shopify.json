@@ -1,0 +1,21 @@
+{
+    "keyword": "\"shopify\" ",
+    "total_payment": {
+        "Hourly": 5917,
+        "Fixed-Price": 2132
+    },
+    "detailed_fixed_payment": {
+        "Less than $100": 702,
+        "$100 to $500": 782,
+        "$500 - $1K": 271,
+        "$1K - $5K": 317,
+        "$5K+": 60
+    },
+    "proposals": {
+        "Less than 5": 792,
+        "5 to 10": 1367,
+        "10 to 15": 1129,
+        "15 to 20": 995,
+        "20 to 50": 2692
+    }
+}

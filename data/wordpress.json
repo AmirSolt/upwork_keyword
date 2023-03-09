@@ -1,0 +1,21 @@
+{
+    "keyword": "\"wordpress\" ",
+    "total_payment": {
+        "Hourly": 9543,
+        "Fixed-Price": 5764
+    },
+    "detailed_fixed_payment": {
+        "Less than $100": 2222,
+        "$100 to $500": 2122,
+        "$500 - $1K": 627,
+        "$1K - $5K": 672,
+        "$5K+": 121
+    },
+    "proposals": {
+        "Less than 5": 1410,
+        "5 to 10": 2603,
+        "10 to 15": 2180,
+        "15 to 20": 1749,
+        "20 to 50": 5065
+    }
+}

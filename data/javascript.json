@@ -1,0 +1,21 @@
+{
+    "keyword": "\"javascript\" ",
+    "total_payment": {
+        "Hourly": 9160,
+        "Fixed-Price": 5306
+    },
+    "detailed_fixed_payment": {
+        "Less than $100": 1814,
+        "$100 to $500": 1659,
+        "$500 - $1K": 614,
+        "$1K - $5K": 934,
+        "$5K+": 285
+    },
+    "proposals": {
+        "Less than 5": 1533,
+        "5 to 10": 2582,
+        "10 to 15": 2058,
+        "15 to 20": 1595,
+        "20 to 50": 4261
+    }
+}

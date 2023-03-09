@@ -1,0 +1,21 @@
+{
+    "keyword": "\"Web Development\" ",
+    "total_payment": {
+        "Hourly": 9231,
+        "Fixed-Price": 6698
+    },
+    "detailed_fixed_payment": {
+        "Less than $100": 1945,
+        "$100 to $500": 2406,
+        "$500 - $1K": 863,
+        "$1K - $5K": 1165,
+        "$5K+": 319
+    },
+    "proposals": {
+        "Less than 5": 1409,
+        "5 to 10": 2608,
+        "10 to 15": 2249,
+        "15 to 20": 1757,
+        "20 to 50": 5181
+    }
+}
